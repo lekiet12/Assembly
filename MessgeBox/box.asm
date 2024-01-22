@@ -6,11 +6,11 @@ include \masm32\include\masm32rt.inc
 
 .code
 main:
-    push 3 
-    push offset msg 
-    push offset caption 
-    push MB_OK 
-    call MessageBoxA
+    push 3      ;(tham số 1) Gọi kiểu MessageBox mong muốn
+    push offset caption   ;lpCaption(tham số 2): chuỗi tiêu đề
+    push offset msg       ;lpText(tham số 3): chuỗi thông điệp
+    push 0                ;hWnd (tham số 4): Cửa sổ cha
+    call MessageBoxA      ;Gọi MessageBox
 
     invoke ExitProcess,0
 end main
