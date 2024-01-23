@@ -6,8 +6,8 @@ include C:\masm32\include\masm32rt.inc
     msg3 db "Ket qua(hex): ", 0
     x db 20 dup(?)
     y db 20 dup(?)
-    sum_result dd 100 dup(0)
-    sum dd 100 dup(0)
+    mutiphy_result dd 100 dup(0)
+    mutiphy dd 100 dup(0)
     tmp dd ?
 
 .code
@@ -54,7 +54,7 @@ chuyen_sang_string proc
     push ecx
     push esi
     push edx
-    lea esi, sum     ;Trỏ esi đến địa chỉ của sum
+    lea esi, mutiphy     ;Trỏ esi đến địa chỉ của mutiphy
     mov ebx, 16      ;Cho ebx=10 để thực hiện phép chia
     
     lap_string:
@@ -97,29 +97,29 @@ dao_nguoc proc
     push ecx
     push edx
     push esi
-    lea edx, sum    ;Trỏ edx đến địa chỉ của biến sum
-    xor ecx, ecx    ;Đưa ecx về 0 để đếm trong biến sum có bao nhiêu kí tự
+    lea edx, mutiphy    ;Trỏ edx đến địa chỉ của biến mutiphy
+    xor ecx, ecx    ;Đưa ecx về 0 để đếm trong biến mutiphy có bao nhiêu kí tự
 
     Nhan:
         cmp byte ptr [edx], 0   ;Kiểm tra xem đó có phải kí tự NULL không (kết thúc chuỗi) để kết thúc vòng lặp
         je break
 
         inc ecx     ;tăng ecx lên 1 đơn vị 
-        inc edx     ;tăng edx lên 1 đơn vị để trỏ đến địa chỉ tiếp theo của biến sum
+        inc edx     ;tăng edx lên 1 đơn vị để trỏ đến địa chỉ tiếp theo của biến mutiphy
         jmp Nhan
 
     break:
-    lea ebx, sum_result  ;trỏ ebx đến địa chỉ của 
+    lea ebx, mutiphy_result  ;trỏ ebx đến địa chỉ của 
     reverse:
         cmp ecx, 0     ;Kiểm tra đã hết kí tự chưa 
         je break_reverse  ;Nếu hết thì kết thúc vòng lặp
-        dec edx  ;Vì ở trên edx(địa chỉ của biến sum) đang trỏ đến kí tự NULL nên ta giảm 1 đon vị để trỏ đến kí tự trước đó 
+        dec edx  ;Vì ở trên edx(địa chỉ của biến mutiphy) đang trỏ đến kí tự NULL nên ta giảm 1 đon vị để trỏ đến kí tự trước đó 
 
-        mov al, byte ptr [edx]  ;cho giá trị tại địa chỉ của ebx(sum) bằng giá trị tại địa chỉ của ebx(sum_result) 
+        mov al, byte ptr [edx]  ;cho giá trị tại địa chỉ của ebx(mutiphy) bằng giá trị tại địa chỉ của ebx(mutiphy_result) 
         mov byte ptr [ebx], al
 
         dec ecx    ;giảm ecx 1 đơn vị
-        inc ebx    ;tăng ebx lên 1 đơn vị để trỏ đến địa chỉ tiếp theo của sum_result
+        inc ebx    ;tăng ebx lên 1 đơn vị để trỏ đến địa chỉ tiếp theo của mutiphy_result
         jmp reverse
 
     break_reverse:
@@ -242,7 +242,7 @@ start:
 
     ; Hiển thị kết quả
     invoke StdOut, addr msg3
-    invoke StdOut, offset sum_result
+    invoke StdOut, offset mutiphy_result
     ; Thoát chương trình
     invoke ExitProcess, 0
 
